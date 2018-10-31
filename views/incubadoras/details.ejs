@@ -1,0 +1,166 @@
+<!-- Inclui o layout do cabeçário-->
+<%- include('../headerLayout.ejs')%>
+
+<div class="row">
+	<div class="col-lg-6 col-md-6 mb-12">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title">Temperatura:</h4>
+				<canvas id="chart"></canvas>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6 col-md-6 mb-12">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title">Umidade:</h4>
+				<canvas id="chartU"></canvas>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+
+	var context = document.getElementById("chart").getContext("2d");
+	context.canvas.width = 1000;
+	context.canvas.height = 500;
+
+	var configuration = {
+		type: 'line',
+		data: {
+			datasets: [{
+				label: "Temperatura",
+				type: 'line',
+				borderColor: 'rgb(249, 59, 59)',
+				pointBackgroundColor: 'rgb(249, 59, 59)',
+				fill: false
+			}]
+		},
+		options: {
+			scales: {
+				xAxes: [{
+					//type: 'value',
+					scaleLabel: {
+						display: true,
+						labelString: 'Segundos'
+					},
+					distribution: 'series',
+					ticks: {
+						beginAtZero: true
+					}
+				}],
+				yAxes: [{
+					scaleLabel: {
+						display: true,
+						labelString: 'Temperatura em °C'
+					},
+					ticks: {
+						beginAtZero: true
+					}
+				}]
+			},
+			animation: {
+				duration: 0
+			}
+		}
+	};
+
+	var chart = new Chart(context, configuration);
+
+	var time = 0;
+	var randomTemp = Math.random() * 5;
+	// var randomUmid = Math.random() * 5;
+
+	// CHART UMIDADE:
+
+	var contextU = document.getElementById("chartU").getContext("2d");
+	contextU.canvas.width = 1000;
+	contextU.canvas.height = 500;
+
+	var configurationU = {
+		type: 'line',
+		data: {
+			datasets: [{
+				label: "Umidade",
+				type: 'line',
+				borderColor: '#2DA8AB',
+				pointBackgroundColor: '#2DA8AB',
+				fill: false
+			}]
+		},
+		options: {
+			scales: {
+				xAxes: [{
+					//type: 'value',
+					scaleLabel: {
+						display: true,
+						labelString: 'Segundos'
+					},
+					distribution: 'series',
+					ticks: {
+						beginAtZero: true
+					}
+				}],
+				yAxes: [{
+					scaleLabel: {
+						display: true,
+						labelString: 'Umidade em %'
+					},
+					ticks: {
+						beginAtZero: true
+					}
+				}]
+			},
+			animation: {
+				duration: 0
+			}
+		}
+	};
+
+	var chartU = new Chart(contextU, configurationU);
+	var timeU = 0;
+	var randomUmid = Math.random() * 5;
+
+
+	function get_data() {
+
+		fetch('/incubadoras/medicao/5').then(function (response) {
+
+			response.json().then(function (data) {
+
+				if (chart.data.labels.length == 10 && chart.data.datasets[0].data.length == 10) {
+					chart.data.labels.shift();
+					chartU.data.labels.shift();
+					chart.data.datasets[0].data.shift();
+					chartU.data.datasets[0].data.shift();
+				}
+
+				chart.data.labels.push(time++);
+				chartU.data.labels.push(timeU++);
+
+				chart.data.datasets[0].data.push(parseFloat(data.temperatura + randomTemp));
+				chartU.data.datasets[0].data.push(parseFloat(data.umidade + randomUmid));
+
+				chart.update();
+				chartU.update();
+
+			});
+		}).catch(function (err) {
+			console.error('Failed retrieving information', err);
+		});
+
+
+
+	}
+
+	get_data();
+
+	setInterval(() => {
+		get_data();
+	}, 2000);
+
+</script>
+
+
+<!-- Inclui o layout de rodapé-->
+<%- include('../footerLayout.ejs')%>

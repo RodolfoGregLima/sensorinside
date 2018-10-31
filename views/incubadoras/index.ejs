@@ -1,0 +1,60 @@
+
+<!-- Inclui o layout do cabeçário-->
+<%- include('../headerLayout.ejs')%>
+
+<p> <a href="/incubadoras/create"> <i class="icon-plus-circled"></i>&ensp;Adicionar Nova Incubadora</a> </p>           
+<div class="row">
+    <!-- Aqui é feito o loop e vai listando as incubadoras-->
+    <% for(data of incubadoras){ %>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Incubadora</h4>      
+                    <p class="card-text">
+                      
+                        <label>Código:</label>
+                        <b><%= data.codigo %></b>
+                        <br />
+
+                        <label>Status:</label>
+                        <% if(data.status == 1){%>
+                            <b>Em uso</b>
+                            <br />
+
+                             <label>Identificação Recém Nascido:</label>
+                            12345
+                            <br />
+                            <label>Nome Recém Nascido:</label>
+                        <%} else{%>
+                            <b>vazia</b>
+                        <%}%>
+
+
+
+                    </p>
+                </div>
+               
+                <div class="card-footer">
+                    <form action="/incubadoras/details/<%= data.idIncubadora %>" method="GET">
+                        <button type="submit" class="btn btn-info">Verificar</button>
+                    </form>
+                   
+                </div>
+            </div>
+        </div>
+
+
+    <% } %>
+</div>
+
+<script>
+    $('#incubadoras').addClass('active');
+</script>
+
+<!-- Inclui o layout de rodapé-->
+<%- include('../footerLayout.ejs')%>
+
+
+
+  

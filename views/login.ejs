@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/fontello.css">    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="apple-touch-icon" href="/images/insensorLogoSimples.png">
+    <link rel="shortcut icon" href="/images/insensorLogoSimples.png">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="http://www.chartjs.org/dist/2.7.1/Chart.js"></script>
+    <script src="http://www.chartjs.org/samples/latest/utils.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+
+	<style>
+		canvas {
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+		}
+	</style>
+</head>
+<body class="bg-dark">
+
+
+    <div class="sufee-login d-flex align-content-center flex-wrap">
+        <div class="container">
+            <div class="login-content">
+                <div class="login-logo">
+                    <a href="index.html">
+                        <img class="align-content" src="images/insensorLogoDeitadaWhiteBlue.png" alt="">
+                    </a>
+                </div>
+                <div class="login-form">
+                    <form action="/login" method="POST">
+                        <div class="form-group">
+                            <label>Usuário</label>
+                            <input name="username" type="text" class="form-control" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <label>Senha</label>
+                            <input name="password" type="password" class="form-control" placeholder="Senha">
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> Lembrar
+                            </label>
+                            <label class="float-right">
+                                <a href="/users/forgot">Esqueceu sua senha?</a>
+                            </label>
+
+                        </div>
+                        <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Entrar</button>
+                        <div class="social-login-content">
+                            <div class="social-button">
+                                <button type="button" class="btn social facebook btn-flat btn-addon mb-3"><i class="icon-facebook"></i>Conectar com Facebook</button>
+                                <button type="button" class="btn social google btn-flat btn-addon mt-2"><i class="icon-google"></i>Conectar com Google</button>
+                            </div>
+                        </div>
+                        <div class="register-link m-t-15 text-center">
+                            <p>Não possui uma conta ? <a href="/users/signup"> Cadastre-se </a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script/main.js"></script>
+
+
+</body>
+</html>

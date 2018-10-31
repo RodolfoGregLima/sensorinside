@@ -1,0 +1,40 @@
+
+<!-- Inclui o layout do cabeçário-->
+<%- include('../headerLayout.ejs')%>
+
+<div class="row">
+    <!-- Aqui é feito o loop e vai listando os recem nascidos-->
+    <% for(data of recemNascidos){ %>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title"><%= data.nome %></h4>      
+                    <p class="card-text">
+                      
+                        <label>Código:</label>
+                        <b><%= data.idRecemNascido %></b>
+                        <br />
+                        <label>Sexo:</label>
+                        <b><%= data.sexo %></b>
+                        <br />
+                        <label>Mãe:</label>
+                        <b><%= data.nomeMae %></b>
+                        &nbsp
+                        <label>Pai:</label>
+                        <b><%= data.nomePai %></b>
+                        <br />
+                        
+
+                    </p>
+                </div>
+               
+            </div>
+        </div>
+
+
+    <% } %>
+</div>
+
+<!-- Inclui o layout de rodapé-->
+<%- include('../footerLayout.ejs')%>
