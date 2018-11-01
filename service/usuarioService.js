@@ -99,12 +99,14 @@ module.exports = class usuarioService {
 
                 let request = new Request("INSERT into usuario values ( @nome, @senha, @email);", function (err, linhas) {
                     if (err) {
+                        connection.close()
                         reject(err);
                     } else {
-                        console.log(`Registro salvo com sucesso. Linhas afetadas: ${linhas}`);
+                        console.log(`Registro salvo com sucesso. Linhas afetadas: ${linhas}`);                       
+                        connection.close();
                         resolve(true);
                     }
-                    connection.close()
+                    
                 });
 
                 request.addParameter('nome', TYPES.VarChar, nome);
@@ -130,8 +132,15 @@ module.exports = class usuarioService {
                 var id = idUsuario;
                 const request = new Request("select idUsuario, nome, email from usuario where idUsuario = @id; ", function (err, rowCount) {
                     if (err) {
+                        connection.close()
                         reject(err)
-                    } else {
+                    } 
+                    if(rowCount == 0){
+                        
+                        connection.close()
+                        resolve(null);
+                    } 
+                    else {
                         console.log(rowCount + ' rows')
                     }
 
@@ -167,25 +176,36 @@ module.exports = class usuarioService {
         return new Promise((resolve, reject) => {
 
             const connection = new Connection(this.config);
-            let linhas;
-
+            
             connection.on('connect', function (err) {
                 // If no error, then good to go...
                 var nome = nomeUsuario;
                 const request = new Request("select * from usuario where nome = @nome; ", function (err, rowCount) {
+                   
                     if (err) {
-                        console.log(err)
-                    } else {
-                        linhas = rowCount;
+
+                        connection.close()
+
+                        reject(err);
+                    }
+                    if(rowCount == 0){
+                        
+                        connection.close()
+
+                        resolve(null);
+                    } 
+                    else {
                         console.log(rowCount + ' rows')
                     }
 
                     connection.close()
                 })
                 request.addParameter('nome', TYPES.VarChar, nomeUsuario);
+
+                
                 request.on('row', function (columns) {
 
-                    let usuario = {
+                   let usuario = {
 
                         idUsuario: columns[0].value,
                         nome: columns[1].value,
@@ -193,9 +213,8 @@ module.exports = class usuarioService {
                         email: columns[3].value
 
                     }
-
-                    resolve(usuario, linhas);
-
+                    
+                    resolve(usuario);
 
                 });
 

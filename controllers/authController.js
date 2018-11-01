@@ -32,24 +32,35 @@ module.exports = function (passport) {
         passwordField: 'password'
     },
         (username, password, done) => {
-            usuarioService.getUsuarioPorNome(username).then(((user) => {
+            usuarioService.getUsuarioPorNome(username).then((usuario) => {
 
-                
-                
-                //  if (isNaN(user.idUsuario)) { return done(null, false) }
+                //Verifica se retornou usuário
+               if(usuario == null) {
+
+                     return done(null, false)
+                }
                  
                  // Descriptografa a senha 
-                let senhaDescriptada = cryptr.decrypt(user.senha);
+                let senhaDescript = cryptr.decrypt(usuario.senha);
 
 
                 // comparando as senhas
-                    if (senhaDescriptada != password) { return done(null, false) }
-
-                    return done(null, user)
+                    if(senhaDescript != password) { 
+                                               
+                         return done(null, false) 
+                         
+                    }
+                    
+                // caso não entrar nos ifs anteriores retorna o usuário
+                    return done(null, usuario)
                   
           
+            }) // Caso der erro na procura de usuário
+            .catch((err)=>{
+
+                console.log(err);
             })
-            )}
+            }
     ));
 
     

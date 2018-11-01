@@ -82,7 +82,7 @@ module.exports = class incubadoraService {
     }
 
     // Adiciona uma incubadora
-    postIncubadora(incubadora){
+    cadIncubadora(incubadora){
         return new Promise((resolve, reject)=>{
 
             const connection = new Connection(this.config);
@@ -95,9 +95,11 @@ module.exports = class incubadoraService {
                 
                 let request = new Request("INSERT into incubadora  values ( @codigo, @status);", function (err, linhas) {
                     if (err) {
+                        connection.close()
                         reject(err);
                     } else {
                         console.log(`Registro salvo com sucesso. Linhas afetadas: ${linhas}`);
+                        connection.close()
                         resolve(true);
                     }
                     connection.close()
@@ -125,7 +127,12 @@ module.exports = class incubadoraService {
                 var id = idIncubadora;
                 const request = new Request("select * from incubadora where idIncubadora = @id; ", function (err, rowCount) {
                     if (err) {
-                        console.log(err)
+                        connection.close()
+                        reject(err)
+                    }
+                    if(rowCount == 0){
+                       connection.close()
+                       resolve(null);
                     } else {
                         console.log(rowCount + ' rows')
                     }
