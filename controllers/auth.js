@@ -18,6 +18,7 @@ module.exports = function (passport) {
 
     passport.deserializeUser(function (user, done) {
         let id = user.idUsuario;
+        console.log(id)
         usuarioService.getUsuarioPorId(id).then((user)=>{
             done(null, user);
 
@@ -32,16 +33,16 @@ module.exports = function (passport) {
         passwordField: 'password'
     },
         (username, password, done) => {
-            usuarioService.getUsuarioPorNome(username).then((usuario) => {
+            usuarioService.getUsuarioPorNome(username).then((user) => {
 
                 //Verifica se retornou usuário
-               if(usuario == null) {
+               if(user == null) {
 
                      return done(null, false)
                 }
                  
                  // Descriptografa a senha 
-                let senhaDescript = cryptr.decrypt(usuario.senha);
+                let senhaDescript = cryptr.decrypt(user.senha);
 
 
                 // comparando as senhas
@@ -52,7 +53,7 @@ module.exports = function (passport) {
                     }
                     
                 // caso não entrar nos ifs anteriores retorna o usuário
-                    return done(null, usuario)
+                    return done(null, user)
                   
           
             }) // Caso der erro na procura de usuário

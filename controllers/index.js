@@ -1,28 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
-var IncubadoraService = require('../service/incubadoraService');
-
-
-var incubadoraService = new IncubadoraService();
-
-router.get('/incubadoras', ensureLoggedIn('/login?fail=true'), function(req, res){
-  
-
-     incubadoraService.getIncubadoras().then((incubadoras) => {
-
-    res.render('incubadoras/index', { incubadoras: incubadoras});
-
-    }).catch((err) => {
-
-    console.log(err);
-
-  });
-  
- 
-});
-
 
 
 
@@ -30,7 +8,6 @@ router.get('/incubadoras', ensureLoggedIn('/login?fail=true'), function(req, res
 router.get('/', function (req, res, next) {
   res.render('login', { message: null });
 });
-
 
 
 router.get('/login', function (req, res) {

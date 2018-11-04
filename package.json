@@ -10,10 +10,8 @@
     "dev": "nodemon ./bin/www"
   },
   "dependencies": {
-    "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "connect-ensure-login": "^0.1.1",
-    "connect-tedious": "^1.1.2",
     "cookie-parser": "~1.4.3",
     "cryptr": "^4.0.0",
     "debug": "~2.6.9",
@@ -28,8 +26,6 @@
     "nodemon": "^1.18.4",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "serialport": "^7.0.2",
-    "session-file-store": "^1.2.0",
     "tedious": "^2.6.4"
   }
 }

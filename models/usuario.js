@@ -1,4 +1,4 @@
-module.exports = class Usuario {
+ module.exports = class Usuario {
     constructor() {
 
         this.idMedicao;

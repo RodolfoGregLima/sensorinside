@@ -8,11 +8,10 @@ var TYPES = require('tedious').TYPES;
 module.exports = class usuarioService {
 
     constructor() {
-
         this.config = {
-            server: 'tbtt.database.windows.net',
+            server: 'insensorserver.database.windows.net',
             userName: 'bandtec',
-            password: 'TBTTprojeto5'
+            password: 'Rodolfolink911'
 
             , options: {
                 debug: {
@@ -22,7 +21,7 @@ module.exports = class usuarioService {
                     token: false,
                     log: true
                 },
-                database: 'TheBigTecTheory',
+                database: 'IncubadorasDB',
                 encrypt: true // for Azure users
             }
 
