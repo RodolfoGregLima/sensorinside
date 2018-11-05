@@ -7,7 +7,7 @@ var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 router.get('/', ensureLoggedIn('/login?fail=true'), function (req, res) {
 
   
-  global.conn.request().query(`select * from incubadora`)
+  global.conn.request().query`select * from incubadora`
   .then(result => {
        res.render('incubadoras/index', { incubadoras: result.recordset });    
    }).catch(err => {
@@ -34,7 +34,7 @@ router.post('/create', function (req, res, next) {
   let status = 0;
 
   
-  global.conn.request().query(`insert into incubadora values(${status},${desc})`)
+  global.conn.request().query`insert into incubadora values(${status},${desc})`
   .then(resultado => {
            res.redirect('/incubadoras');
   }).catch(err => {
@@ -52,7 +52,7 @@ router.get('/details/:id', function (req, res, next) {
 
   let id = req.params.id;
 
-  global.conn.request().query(`select * from incubadora where idIncubadora = ${id}`)
+  global.conn.request().query`select * from incubadora where idIncubadora = ${id}`
 
   .then(resultado => {
 
@@ -74,8 +74,8 @@ router.get('/medicao/:id', (req, res, next) => {
 
   let id = req.params.id;
 
-  
   global.conn.request().query(`select Max(idMedicao), temperatura, umidade from medicao where fkIncubadora = ${id} group by idMedicao, temperatura, umidade`)
+  
   .then(resultado => {
 
     res.json(resultado.recordset[0]);
