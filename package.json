@@ -14,7 +14,6 @@
     "connect-ensure-login": "^0.1.1",
     "cookie-parser": "~1.4.3",
     "cryptr": "^4.0.0",
-    "debug": "~2.6.9",
     "ejs": "^2.6.1",
     "express": "~4.16.0",
     "express-ejs-layouts": "^2.5.0",

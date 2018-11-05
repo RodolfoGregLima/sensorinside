@@ -12,10 +12,15 @@
                 <div class="card-body">
                     <h4 class="card-title">Incubadora</h4>      
                     <p class="card-text">
-                      
-                        <label>Código:</label>
-                        <b><%= data.codIncubadora %></b>
+                
+                        <label>Numero:</label>
+                        <b><%= data.idIncubadora %></b>
                         <br />
+
+                        <label>Descrição:</label>
+                        <%= data.descIncubadora %>
+                        <br />
+                        
 
                         <label>Status:</label>
                         <% if(data.status == 1){%>
@@ -28,6 +33,8 @@
                             <label>Nome Recém Nascido:</label>
                         <%} else{%>
                             <b>vazia</b>
+                            <br>
+                            <a href="/recemNasc/create/<%= data.idIncubadora %>" class="btn btn-outline-primary">Internar</a>
                         <%}%>
 
 
@@ -36,10 +43,11 @@
                 </div>
                
                 <div class="card-footer">
+                 
                     <form action="/incubadoras/details/<%= data.idIncubadora %>" method="GET">
                         <button type="submit" class="btn btn-info">Verificar</button>
                     </form>
-                   
+                
                 </div>
             </div>
         </div>
