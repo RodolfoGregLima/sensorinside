@@ -7,11 +7,21 @@
 var app = require('../app');
 var debug = require('debug')('backend-node:server');
 var http = require('http');
+var config = require('../config');
+var sql = require('mssql')
 
 /**
  * Get port from environment and store in Express.
  */
 
+sql.connect(config)
+.then(conn => {
+  
+  global.conn = conn;
+
+  console.log("passou aqui");
+
+  
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
@@ -88,3 +98,8 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+}
+)
+.catch(err => console.log(err));
+

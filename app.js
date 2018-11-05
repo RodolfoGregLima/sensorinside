@@ -5,8 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser')
 var passport = require('passport')
 var session = require('express-session');
-var config = require('./config');
-var sql = require('mssql')
+
 
 require('./controllers/auth')(passport);
 
@@ -24,9 +23,6 @@ app.use(session({
     saveUninitialized: false
 }));
 
-sql.connect(config)
-    .then(conn => global.conn = conn)
-    .catch(err => console.log(err));
 
 
 app.use(passport.initialize());
