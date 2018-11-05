@@ -96,7 +96,7 @@ router.get('/medicao/:id', (req, res, next) => {
 
   let id = req.params.id;
 
-  global.conn.request().query(`select Max(idMedicao), temperatura, umidade from medicao where fkIncubadora = ${id} group by idMedicao, temperatura, umidade`)
+  global.conn.request().query`select Max(idMedicao), temperatura, umidade from medicao where fkIncubadora = ${id} group by idMedicao, temperatura, umidade`
   
   .then(resultado => {
 
