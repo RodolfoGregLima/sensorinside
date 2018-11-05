@@ -67,6 +67,28 @@ router.get('/details/:id', function (req, res, next) {
  
 });
 
+//----------------------------------------------------------------------------------------
+
+router.get('/delete/:id', (req,res) =>{
+
+  let id = req.params.id;
+
+  global.conn.request().query`delete from incubadora where idIncubadora = ${id}`
+
+  .then(resultado => {
+
+    res.redirect('/incubadoras/');
+    
+
+  }).catch(err => {
+    // Se der algum erro imprime no console
+    console.log(err);
+  })
+
+  })
+
+
+
 //-----------------------------------------------------------------------------------
 //GET obtem medicao da incubadora
 
