@@ -19,7 +19,7 @@ sql.connect(config)
   
   global.conn = conn;
 
-  console.log("passou aqui");
+  console.log("Conectado");
 
   
 var port = normalizePort(process.env.PORT || '3000');
