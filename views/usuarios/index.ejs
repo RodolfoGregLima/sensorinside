@@ -1,0 +1,41 @@
+
+<!-- Inclui o layout do cabeçário-->
+<%- include('../headerLayout.ejs')%>
+
+<p> <a href="/users/create"> <i class="icon-plus-circled"></i>&ensp;Adicionar Novo Usuário</a> </p>           
+<div class="row">
+    <!-- Aqui é feito o loop e vai listando os usuários-->
+    
+        <table class="table table-striped">
+            <thead style="background:#2d3e50; color: whitesmoke">
+              <tr>
+                <th scope="col">Nível de Acesso</th>
+                <th scope="col">Email</th>
+                <th scope="col">Deletar</th>
+              </tr>
+            </thead>
+            <tbody>
+       <% for(data of usuarios){ %>
+              <tr>
+                <!-- <th scope="row">1</th> -->
+                <td><b><%= data.nome %></b></td>
+                <td><%= data.email %></td>
+                <td><a href="#">Deletar</a></td>
+              </tr>
+       <% } %>      
+            </tbody>
+        </table>
+                                   
+    
+</div>
+
+<script>
+    $('#incubadoras').addClass('active');
+</script>
+
+<!-- Inclui o layout de rodapé-->
+<%- include('../footerLayout.ejs')%>
+
+
+
+  
