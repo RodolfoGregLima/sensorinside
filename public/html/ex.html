@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>ex Casa Noturna</title>
+</head>
+<body>
+    Ano de nascimento:
+    <input id="ano" type="number">
+    <button onclick="btn()">POSSO IR?</button>
+    <p id="p"></p>
+
+    <script>
+        function btn() {
+            var ano = document.getElementById("ano").value;
+            var txt;
+            if (validaAno(ano)==true) {
+                var idade = 2018-ano;
+                if (idade >= 15 && idade <= 17)
+                    txt = "Pode entrar, vc tem "+idade+" anos";
+                else
+                    txt = "Voce não pode entrar, vc tem "+idade+" anos";
+            }
+            else
+                txt = "Digite um ano válido, entre 1900 e 2018";
+
+            document.getElementById("p").innerHTML = txt;
+        }
+
+        function validaAno(ano) {
+            if (ano >= 1900 && ano <= 2018) 
+                return true;
+            else
+                return false;
+        }
+    </script>
+</body>
+</html>

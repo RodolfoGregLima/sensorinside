@@ -1,0 +1,214 @@
+<!--Obtem data e hora atuais-->
+<% 
+   // Data atual	 
+	var atual = new Date();
+	var ano = atual.getFullYear();
+	var mes = atual.getMonth() + 1;
+     var dia = atual.getDate();
+
+
+  if( dia < 10 && mes < 10)
+    var data = ano+'-'+'0'+mes+'-'+'0'+dia;
+
+if(dia< 10 && mes >= 10)
+    var data = ano+'-'+mes+'-'+'0'+dia;
+
+if(mes< 10 && dia >= 10)
+     var data = ano+'-'+'0'+mes+'-'+dia;
+
+if(dia >= 10 && mes >= 10)
+     var data = ano+'-'+mes+'-'+dia;
+
+ 
+
+ var hora = atual.getHours();	
+var minutos = atual.getMinutes();
+
+if( hora < 10 && minutos < 10)
+    var time = '0'+hora+':'+'0'+minutos;
+
+if(minutos< 10 && hora >= 10)
+    var time = hora+':'+'0'+minutos;
+
+if(hora< 10 && minutos >= 10)
+    var time = '0'+hora+':'+minutos;
+
+if(hora >= 10 && minutos >= 10)
+    var time = hora+':'+minutos;
+
+
+%>
+
+
+
+    <%- include('../headerLayout.ejs')%>
+    <h4>Cadastro de Recém-Nascidos</h4>
+        <div class="row">
+            <div class=" col-md-6">
+                <hr>
+                <br>
+                <form id="myForm" action="/recemNasc/create" method="post">
+
+                    <div class="form-group">
+                        <label for="nome">*
+                            <b> Nome:</b>
+                        </label>
+                        <input id="nome" type="text" name="nome" maxlength="30" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="group1">*
+                            <b>Sexo:</b>
+                        </label>
+
+                        <label>
+                            <input name="group1" id="radioF" type="radio" checked value="f" />
+                            <span>F</span>
+                        </label>
+
+
+                        <label>
+                            <input name="group1" id="radioM" type="radio" value="m" />
+                            <span>M</span>
+                        </label>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="date">*
+                            <b>Data Nascimento:</b>
+                        </label>
+                        <input id="dateNasc" type="date" name="date" value="<%=data%>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="time">*
+                            <b>Hora Nascimento:</b>
+                        </label>
+                        <input id="timeNasc" type="time" name="time" value="<%=time%>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nomeMae">*
+                            <b>Nome da Mãe:</b>
+                        </label>
+                        <input id="nomeMae" type="text" name="nomeMae" maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nomePai">
+                            <b>Nome do Pai:</b>
+                        </label>
+                        <input id="nomePai" type="text" maxlength="50" name="nomePai">
+                    </div>
+                    <div class="form-group">
+                        <label for="incubadora">
+                            <b>Incubadora:</b>
+                        </label>
+                        <input id="idIncubadora" type="text" name="idIncubadora" style="pointer-events: none;" required>
+
+
+
+                        <a class="btn text-white waves-effect waves-light blue" title="Nova Incubadora" data-toggle="modal" data-target="#exampleModalCenter">
+                            Selecionar Incubadora
+                        </a>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="float-right btn waves-effect waves-light green">Cadastrar</button>
+                    </div>
+
+            </div>
+            </form>
+
+            <!-- Modal Structure -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Selecione uma Incubadora para Concluir</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <br>
+                                </div>
+
+                                <!-- Aqui é feito o loop e vai listando as incubadoras-->
+                                <% for(data of incubadoras){ %>
+
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4 class="card-title">Incubadora
+                                                    <span class="float-right">
+                                                        <%= data.idIncubadora %>
+                                                    </span>
+                                                </h4>
+                                                <p class="card-text">
+
+
+                                                    <label>Descrição:</label>
+
+
+                                                    <br />
+
+
+                                                    <label>Status:</label>
+
+                                                    <b>vazia</b>
+
+
+                                                    <button onclick="cad('<%= data.idIncubadora %>')" data-dismiss="modal" class="btn waves-effect waves-light green float-right">Selecionar</button>
+
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <% } %>
+                            </div>
+
+
+
+                        </div>
+                        <div class="modal-footer">
+
+                            <button class="btn waves-effect waves-light azul" data-dismiss="modal">Cancelar</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div>
+
+
+            </div>
+        </div>
+
+
+        </div>
+
+
+        <script>
+            function cad(idIncubadora) {
+
+                document.getElementById('idIncubadora').value = idIncubadora;
+                // document.getElementById('myForm').submit();
+                document.getElementById('incubadora').innerHTML = idIncubadora;
+            }
+
+
+
+
+            $('#recemNasc').addClass('active');
+        </script>
+
+
+
+
+        <%- include('../footerLayout.ejs')%>

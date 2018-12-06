@@ -1,0 +1,39 @@
+.bg-image{
+background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/bg-login.jpg");
+background-size: cover;
+display: block;
+filter: blur(2px);
+-webkit-filter: blur(2px);
+height: 100%;
+left: 0;
+position: fixed;
+right: 0;
+z-index: -1; }
+
+.inline-block {
+    display: inline-block;
+}
+
+.login-logo {
+    text-align: center;
+    margin-bottom: 15px; }
+    img { max-width: 100%; }
+
+.login-content {
+    max-width: 400px;
+    margin: 10vh auto 0; }
+
+.login-form {
+    position: relative;
+    margin-top: auto;
+    margin-bottom: auto;
+    background: #ffffff;
+    padding: 10px 30px 20px;
+    border-radius: 2px; }
+
+.login-content a {
+    color: #68cbcc !important; }
+
+.container {
+    width: 100%; 
+    min-width: 320px; }

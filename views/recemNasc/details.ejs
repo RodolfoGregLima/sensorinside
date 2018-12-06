@@ -1,0 +1,55 @@
+<!-- Inclui o layout do cabeçário-->
+<%- include('../headerLayout.ejs')%>
+
+<h4>Detalhes de Recém-Nascido</h4>
+<hr>
+<br>  
+	
+
+	<div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-12">
+			<label for=""><b>Id:</b></label>
+			<label for=""><%=data.idRecemNasc%></label><br>
+
+			<label for=""><b>Nome:</b></label>
+			<label for=""><%=data.nome%></label><br>
+
+			<label for=""><b>Sexo:</b></label>
+			<label for=""><%=data.sexo%></label><br>
+
+			<label for=""><b>Data de Nascimento:</b></label>
+			<label for=""><%=data.date%></label><br>
+
+			<label for=""><b>Hora de Nascimento:</b></label>
+            <label for=""><%=data.time%></label><br>
+            
+            <label for=""><b>Nome da Mãe:</b></label>
+            <label for=""><%=data.nomeMae%></label><br>
+
+            <label for=""><b>Nome do Pai:</b></label>
+            <label for=""><%=data.nomePai%></label>
+            
+		</div>
+		
+		
+	</div>
+	<%if(internacao.length > 0){%>
+		<div>
+			<p>Paciente internado na incubadora número: <%=internacao[0].idIncubadora%></p>
+		</div>
+	<%}else{%>
+		<div class="row">
+		
+		<div class="col-md-2 mb-2">
+				
+			<a class="btn waves-effect waves-light red" href="/recemNasc/delete/<%=data.idRecemNasc%>">Deletar</a>
+		</div>
+
+		</div>
+		
+		
+	<%}%>
+
+
+	<!-- Inclui o layout de rodapé-->
+	<%- include('../footerLayout.ejs')%>

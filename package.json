@@ -1,0 +1,36 @@
+{
+  "name": "backend-node",
+  "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "node": "8.9.4"
+  },
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "connect-ensure-login": "^0.1.1",
+    "cors": "^2.8.5",
+    "cryptr": "^4.0.0",
+    "ejs": "^2.6.1",
+    "event-stream": "^4.0.1",
+    "express": "~4.16.0",
+    "express-ejs-layouts": "^2.5.0",
+    "express-session": "^1.15.6",
+    "http-errors": "~1.6.2",
+    "install": "^0.12.2",
+    "moment": "^2.22.2",
+    "morgan": "~1.9.0",
+    "mssql": "~4.2.1",
+    "mssql-session-store": "^1.0.0",
+    "mysql": "~2.16.0",
+    "nodemon": "^1.18.7",
+    "npm": "^6.4.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "stats-lite": "^2.2.0"
+  }
+}

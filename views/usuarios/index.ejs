@@ -1,0 +1,56 @@
+
+<!-- Inclui o layout do cabeçário-->
+<%- include('../headerLayout.ejs')%>
+
+
+<% if(mensagem != null){%>
+  <div class="row">
+  <div  class="alert alert-info" role="alert">
+            
+                  <%=mensagem%>
+                  
+              
+      </div>
+  </div>
+<%}%>
+
+<p> <a href="/users/create"> <i class="icon-plus-circled"></i>&ensp;Adicionar Novo Usuário</a> </p>           
+
+<div class="table-responsive-sm">
+    <!-- Aqui é feito o loop e vai listando os usuários-->
+    
+       <table class="table table-striped">
+            <thead style="background:#2d3e50; color: whitesmoke">
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Opções</th>
+              </tr>
+            </thead>
+            <tbody>
+       
+       
+       <% for(data of usuarios){ %>
+              <tr>
+                <th scope="row"><%=data.idUsuario %></th> 
+                <td><%= data.nome %></td>
+                <td><%= data.email %></td>
+                <td><a href="/users/delete/<%=data.idUsuario%>">Deletar</a></td>
+              </tr>
+          <% } %>                           
+            </tbody>
+        </table>
+
+    </div>
+       
+<script>
+    $('#usuarios').addClass('active');
+</script>
+
+<!-- Inclui o layout de rodapé-->
+<%- include('../footerLayout.ejs')%>
+
+
+
+  
