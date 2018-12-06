@@ -1,0 +1,60 @@
+
+<!-- Inclui o layout do cabeçário-->
+<%- include('../headerLayout.ejs')%>
+
+ <% if(mensagem != null){%>
+        <div class="row">
+		    <div  class="alert alert-success" role="alert">
+                  
+                        <%=mensagem%>
+                        
+                    
+            </div>
+        </div>
+<%}%>
+
+<p> <a href="/recemNasc/create"> <i class="icon-plus-circled"></i>&ensp;Adicionar Novo Recém-Nascido</a> </p>           
+
+    <!-- Aqui é feito o loop e vai listando os usuários-->
+    
+    <div class="table-responsive-sm">
+        
+        <table class="table table-striped">
+            <thead style="background:#2d3e50; color: whitesmoke">
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Mãe</th>
+                <th scope="col">Opções</th>
+              </tr>
+            </thead>
+            <tbody>
+       <%for(data of recensNasc){ %>
+              <tr>
+                <th scope="row"><%= data.idRecemNasc %></th> 
+                <td><%= data.nome %></td>
+                <td><%= data.nomeMae %></td>
+                <td> <a href="/recemNasc/edit/<%=data.idRecemNasc%>"> Editar </a>||
+                    <a href="/recemNasc/details/<%=data.idRecemNasc%>">Detalhes</a>
+                </td>                  
+                    
+              </tr>
+       <% }%>      
+            </tbody>
+        </table>
+                                   
+    
+    </div>
+        
+   
+
+<script>
+    $('#recemNasc').addClass('active');
+</script>
+
+<!-- Inclui o layout de rodapé-->
+<%- include('../footerLayout.ejs')%>
+
+
+
+  

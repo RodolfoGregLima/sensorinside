@@ -1,0 +1,312 @@
+<script>
+
+		var context = document.getElementById("chart").getContext("2d");
+		context.canvas.width = 1000;
+		context.canvas.height = 500;
+
+		var configuration = {
+			type: 'line',
+			data: {
+				datasets: [{
+					borderWidth: 5,
+					label: "Temperatura",
+					pointStyle: "rectRounded",
+					type: 'line',
+					borderColor: 'rgb(249, 59, 59)',
+					pointBackgroundColor: 'rgb(249, 59, 59)',
+					fill: false
+				}]
+			},
+			options: {
+				legend: {
+					display: false
+				},
+				scales: {
+					xAxes: [{
+						//type: 'value',
+						scaleLabel: {
+							display: true,
+							labelString: 'Tempo da coleta',
+							fontColor: "#424242"
+						},
+						distribution: 'series',
+						ticks: {
+							beginAtZero: true,
+							fontColor: "#424242"
+						},
+						gridLines: {
+							borderDash: [10, 4]
+						}
+					}],
+					yAxes: [{
+						scaleLabel: {
+							display: true,
+							labelString: 'Temperatura em °C',
+							fontColor: "#424242"
+						},
+						ticks: {
+							beginAtZero: true,
+							fontColor: "#424242"
+						},
+						gridLines: {
+							borderDash: [10, 4]
+						}
+					}]
+				},
+				animation: {
+					duration: 0
+				}
+			}
+		};
+
+		var chart = new Chart(context, configuration);
+
+		var date = 0;
+		var randomTemp = Math.random() * 5;
+		// var randomUmid = Math.random() * 5;
+
+		// CHART UMIDADE:
+
+		var contextU = document.getElementById("chartU").getContext("2d");
+		contextU.canvas.width = 1000;
+		contextU.canvas.height = 500;
+
+		var configurationU = {
+			type: 'line',
+			data: {
+				datasets: [{
+					borderWidth: 5,
+					label: "Umidade",
+					type: 'line',
+					pointStyle: "rectRounded",
+					borderColor: '#2DA8AB',
+					pointBackgroundColor: '#2DA8AB',
+					fill: false
+				}]
+			},
+			options: {
+				legend: {
+					display: false
+				},
+				scales: {
+					xAxes: [{
+						//type: 'value',
+						scaleLabel: {
+							display: true,
+							labelString: 'Tempo da coleta',
+							fontColor: "#424242"
+						},
+						distribution: 'series',
+						ticks: {
+							beginAtZero: true,
+							fontColor: "#424242"
+						},
+						gridLines: {
+							borderDash: [10, 4]
+						}
+					}],
+					yAxes: [{
+						scaleLabel: {
+							display: true,
+							labelString: 'Umidade em %'
+						},
+						ticks: {
+							beginAtZero: true,
+							fontColor: "#424242"
+						},
+						gridLines: {
+							borderDash: [10, 4]
+						}
+					}]
+				},
+				animation: {
+					duration: 0
+				}
+			}
+		};
+
+		var chartU = new Chart(contextU, configurationU);
+		var timeU = 0;
+		var randomUmid = Math.random() * 5;
+		var alertaTemp = true;
+		var alertaUmid = true;
+
+
+		//Obtem as medições
+		function get_data() {
+
+			fetch('/medicao/<%=incubadora.idIncubadora%>',{method:'get'}).then(function (response) {
+
+				response.json().then(function (data) {
+
+					if (chart.data.labels.length == 9 && chart.data.datasets[0].data.length == 9) {
+						chart.data.labels.shift();
+						chartU.data.labels.shift();
+						chart.data.datasets[0].data.shift();
+						chartU.data.datasets[0].data.shift();
+					}
+                    
+					 chart.data.labels.push(data.time);
+					chartU.data.labels.push(data.time);
+                    
+
+					
+					let barTemp = new ldBar('#temperatura');
+				    let barUmid = new ldBar('#umidade');
+
+					barTemp.set(data.temperatura);
+					barUmid.set(data.umidade);
+
+
+					chart.data.datasets[0].data.push(parseFloat(data.temperatura));
+					chartU.data.datasets[0].data.push(parseFloat(data.umidade));
+					
+					chart.update();
+					chartU.update();
+					alerta(data);
+					
+					
+				});
+			}).catch(function (err) {
+				console.log(err);
+			});
+
+
+
+		}
+
+			get_data();
+		
+
+		setInterval(() => {			
+			get_data();
+		}, 3000);
+
+		
+		
+		
+		
+		
+		var intervaloUmid;
+		var intervaloTemp;
+
+		function alerta(data){
+			
+			
+			
+			
+			let tempMaxConfig = document.getElementById('tempMaxConfigAlerta').value;
+			let tempMinConfig = document.getElementById('tempMinConfigAlerta').value;
+			let umidMaxConfig = document.getElementById('umidMaxConfigAlerta').value;
+			let umidMinConfig = document.getElementById('umidMinConfigAlerta').value;
+			
+    
+
+			
+			// Alerta de temperaturas e umidade a cima da range
+					
+					if((data.temperatura <= tempMinConfig) && (alertaTemp == true) || (data.temperatura >= tempMaxConfig) && (alertaTemp == true)){
+						
+				 intervaloTemp  = setInterval(()=>{
+							$("#temperatura").fadeOut(200);
+							$("#temperatura").fadeIn(200);
+
+							
+						},600);
+						
+						let msgTempAlert = document.getElementById('msgTempAlert');
+						msgTempAlert.style.display = "block";
+						
+						alertaTemp = false;
+					}
+					
+					
+					
+					
+					if((data.umidade <= umidMinConfig && alertaUmid == true) ||(data.umidade >= umidMaxConfig) && (alertaUmid == true)){
+						
+						
+						intervaloUmid = setInterval(()=>{
+							$("#umidade").fadeOut(200);
+							$("#umidade").fadeIn(200);
+							
+						},600);
+							
+							let msgUmidAlert = document.getElementById('msgUmidAlert');
+							msgUmidAlert.style.display ="block"
+							
+							
+											
+							alertaUmid = false;
+							
+						};
+					
+				
+						
+					
+					if((data.temperatura > tempMinConfig && data.temperatura < tempMaxConfig )&& alertaTemp == false ){
+					// clearInterval(intervaloTemp);
+					
+					clearInterval(intervaloTemp);
+						alertaTemp = true;
+						let msgTempAlert = document.getElementById('msgTempAlert');
+						msgTempAlert.style.display = "none";
+						
+
+					}
+
+						
+					
+					if((data.umidade > umidMinConfig && data.umidade <  umidMaxConfig) && alertaUmid == false){
+					
+					
+					clearInterval(intervaloUmid)
+					alertaUmid = true;
+					let msgUmidAlert = document.getElementById('msgUmidAlert');
+					msgUmidAlert.style.display ="none";
+						
+						
+
+					}
+				
+
+
+		}
+		
+		//RANGE DE VALORES DE TEMPERETURA PARA ALTERERAR
+		
+
+		var $range1 = document.getElementById('tempMaxConfig'),
+		$value1 = document.getElementById('tempMaxConfigSpan');
+
+		var $range2 = document.getElementById('tempMinConfig'),
+		$value2 = document.getElementById('tempMinConfigSpan');
+
+		var $range3 = document.getElementById('umidMaxConfig'),
+		$value3 = document.getElementById('umidMaxConfigSpan');
+		
+		var $range4 = document.getElementById('umidMinConfig'),
+   	 	$value4 = document.getElementById('umidMinConfigSpan');
+			
+			
+
+		$range1.addEventListener('input', function() {
+			
+  		$value1.textContent = this.value;
+		});
+		$range2.addEventListener('input', function() {
+			
+  		$value2.textContent = this.value;
+		});
+		$range3.addEventListener('input', function() {
+			
+  		$value3.textContent = this.value;
+		});
+		$range4.addEventListener('input', function() {
+			
+  		$value4.textContent = this.value;
+		});
+		 
+
+
+	</script>

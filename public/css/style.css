@@ -1,5 +1,7 @@
 body {
-  background: #f1f2f7;
+  background: #f1f2f7; }
+label{
+  font-size: small;
 }
 
 .btn-info {
@@ -7,9 +9,81 @@ body {
   border-color: #68cbcc;
 } .btn-info:hover {
   background: #37babb;
-  border-color: #68cbcc;
-}
+  border-color: #68cbcc; }
 
+.card .card-body h4 {
+  margin: 0; }
+
+.inputCalendario {
+  position: relative;
+  background: transparent;
+  width: 200px;
+  border: none;
+  outline: none;
+  padding: 8px 0;
+  font-size: 16px;}
+
+.ui-datepicker-trigger {
+  width: 30px}
+  .datepicker-orient-top {
+    top: auto !important
+  }
+
+.azul {
+  background-color: #68cbcc !important; }
+
+.modal {
+  left: 0;
+  right: 0;
+  background-color: transparent;
+  max-height: 100%;
+  box-shadow: none;
+} h5 {
+  margin: 0; }
+
+.modal .modal-content {
+  padding: 0; }
+
+.modal .modal-footer .btn {
+  margin-right: .5rem; }
+
+.preloader-background {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #eee;
+	position: fixed;
+	z-index: 1000;
+	top: 0;
+	left: 0;
+	right: 0;
+  bottom: 0; }
+  
+.detailModule {
+  padding-left: 15px;
+  padding-right: 15px; }
+
+.labelTemp {
+  color: rgb(249, 49, 49); }
+  
+.labelUmi {
+  color: #03a9f3; }
+
+.ldBar {
+  display: block;
+  margin: auto; }
+
+::selection {
+  background: #68cbcc; }
+::-moz-selection {
+  background: #68cbcc; }
+
+.user-menu a {
+  transition: all .3s ease}
+
+.user-menu a:hover {
+    color: #dddddd !important;
+  }
 
 /* This css file is to over write bootstarp css
 --------------------------------------------------------- /
@@ -371,6 +445,11 @@ p {
   line-height: 24px;
   color: #878787; }
 
+.register-link p {
+  margin-top:20px;
+  margin-bottom: 0;
+}
+
 p:focus {
   border: none;
   outline: 0; }
@@ -414,9 +493,6 @@ button:focus {
 img {
   max-width: 100%; }
 
-.modal-header {
-  display: block; }
-
 .mb-0 {
   margin-bottom: 0; }
 
@@ -428,7 +504,6 @@ img {
 
 .btn,
 button,
-input,
 textarea {
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -635,12 +710,17 @@ aside.left-panel {
         color: #869099;
         display: inline-block;
         font-size: 14px;
-        line-height: 26px;
+        line-height: 55px;
         padding: 10px 0;
         position: relative;
         width: 100%; }
         .navbar .navbar-nav li > a:hover, .navbar .navbar-nav li > a:hover .menu-icon {
-          color: white; }
+          color: white; 
+          -o-transition:.3s;
+          -ms-transition:.3s;
+          -moz-transition:.3s;
+          -webkit-transition:.3s;
+          transition:.3s; }
         .navbar .navbar-nav li > a .menu-icon {
           color: #869099;
           float: left;
@@ -870,8 +950,8 @@ aside.left-panel {
 
 .right-panel header.header {
   background: #68cbcc;
-  -webkit-box-shadow: none;
-          box-shadow: none;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+          box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
   clear: both;
   padding: 0 30px;
   height: 55px;
@@ -1216,11 +1296,11 @@ header .form-inline {
 
 .card {
   margin-bottom: 1.875em;
-  border-radius: 3px;
+  /* border-radius: 3px; */
   padding: 0;
   border: 0px solid transparent;
-  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
-          box-shadow: 0 0 20px rgba(0, 0, 0, 0.08); }
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.10), 0 3px 1px -2px rgba(0,0,0,0.10), 0 1px 5px 0 rgba(0,0,0,0.2);
+          box-shadow: 0 2px 2px 0 rgba(0,0,0,0.10), 0 3px 1px -2px rgba(0,0,0,0.10), 0 1px 5px 0 rgba(0,0,0,0.2); }
   .card .box-title {
     font-weight: 600;
     font-size: 1em;
@@ -1357,8 +1437,9 @@ header .form-inline {
     padding: 1.25em;
     position: relative;
     width: 100%; }
-  .card h4 {
-    font-size: 1.1rem; }
+  .card h5 {
+    font-size: 1.1rem !important;
+    margin-bottom: 1.4rem;}
   .card .user-header .media img {
     border: 5px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
@@ -1583,7 +1664,7 @@ header .form-inline {
     color: #878787;
     display: inline-block;
     font-size: 16px;
-    float: left;
+   
     padding: 0 7px;
     width: inherit;
     text-align: center; }
@@ -1624,12 +1705,7 @@ header .form-inline {
   top: 10px;
   left: 40%; }
 
-.twt-feed {
-  -webkit-border-radius: 4px 4px 0 0;
-  color: #FFFFFF;
-  padding: 40px 10px 10px;
-  position: relative;
-  min-height: 170px; }
+
 
 .weather-category {
   padding: 15px 0;
@@ -1749,12 +1825,15 @@ header .form-inline {
     font-size: 24px; }
 
 .login-content {
-  max-width: 540px;
-  margin: 8vh auto; }
+  max-width: 400px;
+  margin: 10vh auto 0; }
 
 .login-form {
+  position: relative;
+  margin-top: auto;
+  margin-bottom: auto;
   background: #ffffff;
-  padding: 30px 30px 20px;
+  padding: 10px 30px 20px;
   border-radius: 2px; }
 
 .login-form h4 {
@@ -1776,6 +1855,7 @@ header .form-inline {
   border: 0px; }
 
 .login-form label {
+  margin-top:4px;
   color: #878787;
   text-transform: uppercase; }
 
@@ -1790,7 +1870,7 @@ header .form-inline {
   background: #fcfcfc; }
 
 .social-button {
-  padding: 0 30px; }
+  padding: 0; }
   .social-button .facebook {
     background: #3b5998;
     color: #fff; }
@@ -2389,7 +2469,7 @@ footer.site-footer {
       display: inline-block; }
     .card-footer.bg-white [class*="float"].fa {
       display: inline-block;
-      float: left !important; }
+       }
 
   #traffic-chart {
     height: 232px !important; }
@@ -2454,6 +2534,7 @@ footer.site-footer {
     overflow: scroll; }
 
   .right-panel header.header {
+    box-shadow: none;
     height: 62px; }
   .right-panel .top-left, .right-panel .top-right {
     width: 100%;
@@ -2526,7 +2607,3 @@ footer.site-footer {
     right: 20px !important; }
 
 /*# sourceMappingURL=style.css.map */
-
-
-
-

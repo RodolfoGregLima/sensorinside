@@ -1,68 +1,142 @@
-
 <!-- Inclui o layout do cabeçário-->
 <%- include('../headerLayout.ejs')%>
-
-<p> <a href="/incubadoras/create"> <i class="icon-plus-circled"></i>&ensp;Adicionar Nova Incubadora</a> </p>           
-<div class="row">
-    <!-- Aqui é feito o loop e vai listando as incubadoras-->
-    <% for(data of incubadoras){ %>
-
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Incubadora</h4>      
-                    <p class="card-text">
+   
+ <% if(mensagem != null){%>
+    <div class="row">
+        <div  class="alert alert-success" role="alert">
+              
+                    <%=mensagem%>
                 
-                        <label>Numero:</label>
-                        <b><%= data.idIncubadora %></b>
-                        <br />
-
-                        <label>Descrição:</label>
-                        <%= data.descIncubadora %>
-                        <br />
-                        
-
-                        <label>Status:</label>
-                        <% if(data.status == 1){%>
-                            <b>Em uso</b>
-                            <br />
-
-                             <label>Identificação Recém Nascido:</label>
-                            12345
-                            <br />
-                            <label>Nome Recém Nascido:</label>
-                        <%} else{%>
-                            <b>vazia</b>
-                            <br>
-                            <a href="/recemNasc/create/<%= data.idIncubadora %>" class="btn btn-outline-primary">Internar</a>
-                        <%}%>
-
-
-
-                    </p>
+        </div>
+    </div>
+<%}%>
+    <!-- BOTÃO E MODAL - ADICIONAR INCUBADORA: -->
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large waves-effect waves-light green" title="Nova Incubadora" data-toggle="modal" data-target="#exampleModalCenter">
+            <i style="font-style: normal;" class="large material-icons">+</i>
+        </a>
+    </div>
+    <!-- Modal Structure -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Nova Incubadora</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-               
-                <div class="card-footer">
-                 
-                    <form action="/incubadoras/details/<%= data.idIncubadora %>" method="GET">
-                        <button type="submit" class="btn btn-info">Verificar</button>
+                <div class="modal-body">
+                    <form action="/incubadoras/create" method="POST">
+                        <div class="form-group">
+                            <label for="desc">Descrição:</label>
+                            <input type="text"  id="desc" name="desc" maxlength="28" required>
+                            
+                        </div>
+                        <label for="tempMaxConfig">Temperatura máxima:</label>
+							<span id="tempMaxConfigSpan"></span>
+							<input type="range" id="tempMaxConfig" name="tempMaxConfig" min="21" max="50" required  />
+										  
+							<label for="tempMinConfig">Temperatura mínima:</label>
+							<span id="tempMinConfigSpan"></span>
+                            <input type="range" id="tempMinConfig" name="tempMinConfig" min="17" max="22"  required>
+
+							<label for="umidMaxConfig">Umidade máxima:</label>
+							<span id="umidMaxConfigSpan"></span>
+                            <input type="range" id="umidMaxConfig" name="umidMaxConfig" min="71" max="100" required>
+
+							<label for="umidMinConfig">Umidade mínima:</label>
+							<span id="umidMinConfigSpan"></span>
+                            <input type="range" id="umidMinConfig" name="umidMinConfig" min="35" max="70"  required>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn waves-effect waves-light azul ">Cadastrar</button>
+                    <button type="button" class="btn waves-effect waves-light azul" data-dismiss="modal">Fechar</button>
                     </form>
-                
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="row">
+        <!-- Aqui é feito o loop e vai listando as incubadoras-->
+        <% for(data of incubadoras){ %>
+
+            <div class="col-lg-4 col-md-6 col-sm-6 d-flex align-items-stretch">
+                <div class="card" style="min-width: 100%;">
+                    <div class="card-body">
+                        <h4 style="font-size:22px;" class="card-title">Incubadora
+                            <span class="float-right">
+                                <%= data.idIncubadora %>
+                            </span>
+                        </h4>
+                        <p class="card-text">
+                            <form action="/incubadoras/details/<%= data.idIncubadora %>" method="GET">
+                                    <% if(data.status == 1){%>
+                                        <!-- <label><b>Identificação Recém Nascido:</b></label>
+                                       <label><%=data.idRecemNasc%></label>
+                                        <br> -->
+                                        <img style="filter: opacity(50%);" src="images/baby2.png">
+                                        <label><%=data.nome%></label>
+                                        <br>
+                                        <button type="submit" class="btn waves-effect waves-light azul float-right">Detalhes ></button>
+                                        <%} else{%>
+                                            
+                                        <img style="filter: opacity(50%); width: 30px; margin-top: 5px; margin-bottom: 5px;" src="images/empty.png">
+                                            <label>Incubadora vazia</label>
+                                            <br><br>
+                                            <button type="submit" style="position: absolute; bottom: 1.25em; right: 1.25em;" class="float-right btn waves-effect waves-light azul float-right">Detalhes ></button>
+                                        <%}%>            
+                            </form>
+                        </p>
+                    </div>
+                </div>
+            </div>
 
 
-    <% } %>
-</div>
+            <% } %>
+    </div>
 
-<script>
-    $('#incubadoras').addClass('active');
-</script>
+    <script>
+        $('#incubadoras').addClass('active');
+    </script>
 
-<!-- Inclui o layout de rodapé-->
-<%- include('../footerLayout.ejs')%>
+    <script>
+        //RANGE DE VALORES DE TEMPERETURA PARA ALTERERAR
+		
 
+		var $range1 = document.getElementById('tempMaxConfig'),
+		$value1 = document.getElementById('tempMaxConfigSpan');
 
+		var $range2 = document.getElementById('tempMinConfig'),
+		$value2 = document.getElementById('tempMinConfigSpan');
 
-  
+		var $range3 = document.getElementById('umidMaxConfig'),
+		$value3 = document.getElementById('umidMaxConfigSpan');
+		
+		var $range4 = document.getElementById('umidMinConfig'),
+   	 	$value4 = document.getElementById('umidMinConfigSpan');
+			
+			
+
+		$range1.addEventListener('input', function() {
+			
+  		$value1.textContent = this.value;
+		});
+		$range2.addEventListener('input', function() {
+			
+  		$value2.textContent = this.value;
+		});
+		$range3.addEventListener('input', function() {
+			
+  		$value3.textContent = this.value;
+		});
+		$range4.addEventListener('input', function() {
+			
+  		$value4.textContent = this.value;
+		});
+    </script>
+
+    <!-- Inclui o layout de rodapé-->
+    <%- include('../footerLayout.ejs')%>

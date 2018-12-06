@@ -1,17 +1,18 @@
-#!/usr/bin/env node
+var sql = require('mssql');
+var config = require('../config');
 
-/**
- * Module dependencies.
- */
+sql.connect(config)
+  .then(conn => {
+     global.conn = conn;
 
-var app = require('../app');
-var debug = require('debug')('backend-node:server');
-var http = require('http');
+     console.log("Conectado!")
 
-/**
- * Get port from environment and store in Express.
- */
+    var app = require('../app');
+    var debug = require('debug')('backend-node:server');
+    var http = require('http');
+    
 
+  
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
@@ -88,3 +89,6 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+}).catch (() => { })
+

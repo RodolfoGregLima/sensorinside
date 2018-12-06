@@ -1,68 +1,59 @@
-var UsuarioService = require('../service/usuarioService');
 const LocalStrategy = require('passport-local').Strategy;
 var express = require('express');
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('2012');
 
-const usuarioService = new UsuarioService();
 
+//configuraremos o passport aqui
+//---------------------------------------------------------------------------
 module.exports = function (passport) {
-    
-    
-    //configuraremos o passport aqui
 
-    passport.serializeUser(function (user, done) {
 
-        done(null, user);
+    passport.serializeUser(function (user_id, done) {
+
+        done(null, user_id);
     });
-
-    passport.deserializeUser(function (user, done) {
-        let id = user.idUsuario;
-        console.log(id)
-        usuarioService.getUsuarioPorId(id).then((user)=>{
-            done(null, user);
-
-        }).catch((err) =>{
-            console.log(err);
-        });
-        
+//------------------------------------------------------------------------------------
+    passport.deserializeUser(function (user_id, done) {
+    
+        done(null, user_id);
+          
     });
-
+//---------------------------------------------------------------------------------------
     passport.use(new LocalStrategy({
         usernameField: 'username',
         passwordField: 'password'
     },
         (username, password, done) => {
-            usuarioService.getUsuarioPorNome(username).then((user) => {
 
-                //Verifica se retornou usuário
-               if(user == null) {
+            global.conn.request().query`select top (1) idUsuario, senha  from usuario where email = ${username} order by idUsuario desc`
+            .then(usuario => {
 
-                     return done(null, false)
-                }
-                 
-                 // Descriptografa a senha 
+                //Verifica se retornou alguma usuario
+                if (usuario.recordset.length == 0) 
+                    return done(null, false)
+
+                let user = usuario.recordset[0]; 
+                
+
+               // Descriptografa a senha 
                 let senhaDescript = cryptr.decrypt(user.senha);
-
-
+        
                 // comparando as senhas
-                    if(senhaDescript != password) { 
-                                               
-                         return done(null, false) 
-                         
-                    }
-                    
-                // caso não entrar nos ifs anteriores retorna o usuário
-                    return done(null, user)
-                  
-          
-            }) // Caso der erro na procura de usuário
-            .catch((err)=>{
+                if (senhaDescript != password) 
+                    return done(null, false)               
 
+                // caso não entrar nos ifs anteriores retorna o usuário
+                return done(null, user.idUsuario)
+
+            }).catch(err => {
+                // Se der algum erro imprime no console
                 console.log(err);
             })
-            }
+
+            
+        }
     ));
 
-    
+
 }
